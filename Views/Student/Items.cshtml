@@ -1,0 +1,65 @@
+﻿@model StudentViewModel
+
+@{
+    ViewData["Title"] = "Our Students";
+    var baseClassName = "nav-link";
+    var className = "";
+}
+
+<div>
+    <div class="row">
+        <ul class="nav nav-tabs">
+
+            @if (Model.ActiveEnrollmentStatus == "All")
+            {
+                className = baseClassName + " active";
+            }
+            else
+            {
+                className = baseClassName;
+            }
+
+            <li class="nav-item">
+                <a class="@className" asp-action="Items" asp-route-status="All">All</a>
+            </li>
+
+
+            @foreach (var status in Model.EnrollmentStatuses)
+            {
+                @if (Model.ActiveEnrollmentStatus == status)
+                {
+                    className = baseClassName + " active";
+                }
+                else
+                {
+                    className = baseClassName;
+                }
+                <li class="nav-item">
+                    <a class="@className" asp-action="Items" asp-route-status="@status">@status</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h4>Students</h4>
+            @if (Model.Students.Count > 0)
+            {
+                <ul>
+                    @foreach (var student in Model.Students)
+                    {
+                        <li>@student.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No students enrolled.</p>
+            }
+        </div>
+        <div class="col">
+            
+        </div>
+    </div>
+</div>
